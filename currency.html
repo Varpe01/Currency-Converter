@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styless.css">
+  <title>Currency Converter</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(to bottom, #fe9e9e,#e9dd56);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .converter {
+      background-color: #fff;
+      padding: 80px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    select, input {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+    }
+
+    button {
+      background-color: #4c59af;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    .flag-icon {
+      width: 30px;
+      margin-right: 10px;
+    }
+
+    /* Add hover effect */
+    .flag-container:hover {
+      transform: scale(1.1);
+      transition: transform 0.2s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+
+<div class="converter">
+  <h2>Currency Converter</h2>
+  <div>
+    <label for="fromCurrency">From:</label>
+    <select id="fromCurrency">
+      <option value="usd">Us Dollar</option>
+      <option value="eur">Euro</option>
+      <option value="gbp">Pound</option>
+      <option value="jpy">Gapanese Yen</option>
+      <option value="inr">Indian Rupees</option>
+    </select>
+  </div>
+  <div>
+    <label for="toCurrency">To:</label>
+    <select id="toCurrency">
+      <option value="usd">Us Dollar</option>
+      <option value="eur">Euro</option>
+      <option value="gbp">Pound</option>
+      <option value="jpy">Japanese Yen</option>
+      <option value="inr">Indian Rupees</option>
+    </select>
+  </div>
+  <div>
+    <label for="amount">Amount:</label>
+    <input type="number" id="amount" placeholder="Enter amount">
+  </div>
+  <br><button onclick="convertCurrency()">Convert</button><br><br>
+  <div id="result"></div>
+</div>
+
+<script>
+  function convertCurrency() {
+    const fromCurrency = document.getElementById('fromCurrency').value;
+    const toCurrency = document.getElementById('toCurrency').value;
+    const amount = parseFloat(document.getElementById('amount').value);
+
+    const conversionRates = {
+      usd: { eur: 0.91, gbp: 0.79, jpy: 144.64,  inr: 83.19 },
+      eur: { usd: 1.10, gbp: 0.86, jpy: 158.49,  inr: 91.16 },
+      gbp: { usd: 1.27, eur: 0.0063, jpy: 184.05,  inr: 105.86 },
+      jpy: { usd: 0.0069, eur: 0.0075, gbp: 0.0054,  inr: 0.58 },
+      inr: { usd: 0.012, eur: 0.011, gbp: 0.0094, jpy: 1.74 },
+    };
+
+    if (isNaN(amount)) {
+      alert("Please enter a valid amount");
+      return;
+    }
+
+    if (fromCurrency === toCurrency) {
+      alert("Cannot convert the same currency");
+      return;
+    }
+
+    const convertedAmount = amount * conversionRates[fromCurrency][toCurrency];
+
+    const resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = `${amount.toFixed(2)} ${fromCurrency.toUpperCase()} is equal to ${convertedAmount.toFixed(2)} ${toCurrency.toUpperCase()}`;
+  }
+</script>
+
+</body>
+</html>
